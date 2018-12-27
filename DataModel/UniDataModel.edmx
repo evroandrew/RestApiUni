@@ -1,0 +1,842 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TestDatabaseEntityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbAudiences">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="tbAudLect">
+          <Key>
+            <PropertyRef Name="AudId" />
+            <PropertyRef Name="LectId" />
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="AudId" Type="int" Nullable="false" />
+          <Property Name="LectId" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeachSubj_TeacherId" Type="int" />
+          <Property Name="TeachSubj_SubjId" Type="int" />
+        </EntityType>
+        <EntityType Name="tbDepartments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="tbGroups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" />
+          <Property Name="Speciality_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbLections">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Start" Type="datetime" Nullable="false" />
+          <Property Name="Finish" Type="datetime" Nullable="false" />
+          <Property Name="Day" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbMarks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentsMark" Type="int" Nullable="false" />
+          <Property Name="Student_Id" Type="int" />
+          <Property Name="TeachSubj_TeacherId" Type="int" />
+          <Property Name="TeachSubj_SubjId" Type="int" />
+        </EntityType>
+        <EntityType Name="tbPhones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentsPhone" Type="nvarchar" MaxLength="64" />
+          <Property Name="Student_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbSpeciality">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="tbStudents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="64" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="64" />
+          <Property Name="Birthday" Type="datetime" Nullable="false" />
+          <Property Name="LogbookNumber" Type="int" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="64" />
+          <Property Name="Address" Type="nvarchar" MaxLength="128" />
+          <Property Name="Group_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbSubjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="tbTeachers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="64" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="64" />
+          <Property Name="Department_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbTeachSubj">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+            <PropertyRef Name="SubjId" />
+          </Key>
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="SubjId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_tbAudLect_dbo_tbAudiences_AudId">
+          <End Role="tbAudiences" Type="Self.tbAudiences" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbAudLect" Type="Self.tbAudLect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbAudiences">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbAudLect">
+              <PropertyRef Name="AudId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbAudLect_dbo_tbGroups_GroupId">
+          <End Role="tbGroups" Type="Self.tbGroups" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbAudLect" Type="Self.tbAudLect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbGroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbAudLect">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbAudLect_dbo_tbLections_LectId">
+          <End Role="tbLections" Type="Self.tbLections" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbAudLect" Type="Self.tbAudLect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbLections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbAudLect">
+              <PropertyRef Name="LectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbAudLect_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId">
+          <End Role="tbTeachSubj" Type="Self.tbTeachSubj" Multiplicity="0..1" />
+          <End Role="tbAudLect" Type="Self.tbAudLect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTeachSubj">
+              <PropertyRef Name="TeacherId" />
+              <PropertyRef Name="SubjId" />
+            </Principal>
+            <Dependent Role="tbAudLect">
+              <PropertyRef Name="TeachSubj_TeacherId" />
+              <PropertyRef Name="TeachSubj_SubjId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbGroups_dbo_tbSpeciality_Speciality_Id">
+          <End Role="tbSpeciality" Type="Self.tbSpeciality" Multiplicity="0..1" />
+          <End Role="tbGroups" Type="Self.tbGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbSpeciality">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbGroups">
+              <PropertyRef Name="Speciality_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbMarks_dbo_tbStudents_Student_Id">
+          <End Role="tbStudents" Type="Self.tbStudents" Multiplicity="0..1" />
+          <End Role="tbMarks" Type="Self.tbMarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbStudents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbMarks">
+              <PropertyRef Name="Student_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbMarks_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId">
+          <End Role="tbTeachSubj" Type="Self.tbTeachSubj" Multiplicity="0..1" />
+          <End Role="tbMarks" Type="Self.tbMarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTeachSubj">
+              <PropertyRef Name="TeacherId" />
+              <PropertyRef Name="SubjId" />
+            </Principal>
+            <Dependent Role="tbMarks">
+              <PropertyRef Name="TeachSubj_TeacherId" />
+              <PropertyRef Name="TeachSubj_SubjId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbPhones_dbo_tbStudents_Student_Id">
+          <End Role="tbStudents" Type="Self.tbStudents" Multiplicity="0..1" />
+          <End Role="tbPhones" Type="Self.tbPhones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbStudents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbPhones">
+              <PropertyRef Name="Student_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbStudents_dbo_tbGroups_Group_Id">
+          <End Role="tbGroups" Type="Self.tbGroups" Multiplicity="0..1" />
+          <End Role="tbStudents" Type="Self.tbStudents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbGroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbStudents">
+              <PropertyRef Name="Group_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbTeachers_dbo_tbDepartments_Department_Id">
+          <End Role="tbDepartments" Type="Self.tbDepartments" Multiplicity="0..1" />
+          <End Role="tbTeachers" Type="Self.tbTeachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbDepartments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbTeachers">
+              <PropertyRef Name="Department_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbTeachSubj_dbo_tbSubjects_SubjId">
+          <End Role="tbSubjects" Type="Self.tbSubjects" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbTeachSubj" Type="Self.tbTeachSubj" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbTeachSubj">
+              <PropertyRef Name="SubjId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbTeachSubj_dbo_tbTeachers_TeacherId">
+          <End Role="tbTeachers" Type="Self.tbTeachers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbTeachSubj" Type="Self.tbTeachSubj" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTeachers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbTeachSubj">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestDatabaseEntityModelStoreContainer">
+          <EntitySet Name="tbAudiences" EntityType="Self.tbAudiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbAudLect" EntityType="Self.tbAudLect" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbDepartments" EntityType="Self.tbDepartments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbGroups" EntityType="Self.tbGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbLections" EntityType="Self.tbLections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbMarks" EntityType="Self.tbMarks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbPhones" EntityType="Self.tbPhones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbSpeciality" EntityType="Self.tbSpeciality" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbStudents" EntityType="Self.tbStudents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbSubjects" EntityType="Self.tbSubjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbTeachers" EntityType="Self.tbTeachers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbTeachSubj" EntityType="Self.tbTeachSubj" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_tbAudLect_dbo_tbAudiences_AudId" Association="Self.FK_dbo_tbAudLect_dbo_tbAudiences_AudId">
+            <End Role="tbAudiences" EntitySet="tbAudiences" />
+            <End Role="tbAudLect" EntitySet="tbAudLect" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbAudLect_dbo_tbGroups_GroupId" Association="Self.FK_dbo_tbAudLect_dbo_tbGroups_GroupId">
+            <End Role="tbGroups" EntitySet="tbGroups" />
+            <End Role="tbAudLect" EntitySet="tbAudLect" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbAudLect_dbo_tbLections_LectId" Association="Self.FK_dbo_tbAudLect_dbo_tbLections_LectId">
+            <End Role="tbLections" EntitySet="tbLections" />
+            <End Role="tbAudLect" EntitySet="tbAudLect" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbAudLect_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId" Association="Self.FK_dbo_tbAudLect_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId">
+            <End Role="tbTeachSubj" EntitySet="tbTeachSubj" />
+            <End Role="tbAudLect" EntitySet="tbAudLect" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbGroups_dbo_tbSpeciality_Speciality_Id" Association="Self.FK_dbo_tbGroups_dbo_tbSpeciality_Speciality_Id">
+            <End Role="tbSpeciality" EntitySet="tbSpeciality" />
+            <End Role="tbGroups" EntitySet="tbGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbMarks_dbo_tbStudents_Student_Id" Association="Self.FK_dbo_tbMarks_dbo_tbStudents_Student_Id">
+            <End Role="tbStudents" EntitySet="tbStudents" />
+            <End Role="tbMarks" EntitySet="tbMarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbMarks_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId" Association="Self.FK_dbo_tbMarks_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId">
+            <End Role="tbTeachSubj" EntitySet="tbTeachSubj" />
+            <End Role="tbMarks" EntitySet="tbMarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbPhones_dbo_tbStudents_Student_Id" Association="Self.FK_dbo_tbPhones_dbo_tbStudents_Student_Id">
+            <End Role="tbStudents" EntitySet="tbStudents" />
+            <End Role="tbPhones" EntitySet="tbPhones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbStudents_dbo_tbGroups_Group_Id" Association="Self.FK_dbo_tbStudents_dbo_tbGroups_Group_Id">
+            <End Role="tbGroups" EntitySet="tbGroups" />
+            <End Role="tbStudents" EntitySet="tbStudents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbTeachers_dbo_tbDepartments_Department_Id" Association="Self.FK_dbo_tbTeachers_dbo_tbDepartments_Department_Id">
+            <End Role="tbDepartments" EntitySet="tbDepartments" />
+            <End Role="tbTeachers" EntitySet="tbTeachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbTeachSubj_dbo_tbSubjects_SubjId" Association="Self.FK_dbo_tbTeachSubj_dbo_tbSubjects_SubjId">
+            <End Role="tbSubjects" EntitySet="tbSubjects" />
+            <End Role="tbTeachSubj" EntitySet="tbTeachSubj" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbTeachSubj_dbo_tbTeachers_TeacherId" Association="Self.FK_dbo_tbTeachSubj_dbo_tbTeachers_TeacherId">
+            <End Role="tbTeachers" EntitySet="tbTeachers" />
+            <End Role="tbTeachSubj" EntitySet="tbTeachSubj" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestDatabaseEntityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbAudience">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbAudLects" Relationship="Self.FK_dbo_tbAudLect_dbo_tbAudiences_AudId" FromRole="tbAudiences" ToRole="tbAudLect" />
+        </EntityType>
+        <EntityType Name="tbAudLect">
+          <Key>
+            <PropertyRef Name="AudId" />
+            <PropertyRef Name="LectId" />
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="AudId" Type="Int32" Nullable="false" />
+          <Property Name="LectId" Type="Int32" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeachSubj_TeacherId" Type="Int32" />
+          <Property Name="TeachSubj_SubjId" Type="Int32" />
+          <NavigationProperty Name="tbAudience" Relationship="Self.FK_dbo_tbAudLect_dbo_tbAudiences_AudId" FromRole="tbAudLect" ToRole="tbAudiences" />
+          <NavigationProperty Name="tbGroup" Relationship="Self.FK_dbo_tbAudLect_dbo_tbGroups_GroupId" FromRole="tbAudLect" ToRole="tbGroups" />
+          <NavigationProperty Name="tbLection" Relationship="Self.FK_dbo_tbAudLect_dbo_tbLections_LectId" FromRole="tbAudLect" ToRole="tbLections" />
+          <NavigationProperty Name="tbTeachSubj" Relationship="Self.FK_dbo_tbAudLect_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId" FromRole="tbAudLect" ToRole="tbTeachSubj" />
+        </EntityType>
+        <EntityType Name="tbDepartment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbTeachers" Relationship="Self.FK_dbo_tbTeachers_dbo_tbDepartments_Department_Id" FromRole="tbDepartments" ToRole="tbTeachers" />
+        </EntityType>
+        <EntityType Name="tbGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Speciality_Id" Type="Int32" />
+          <NavigationProperty Name="tbAudLects" Relationship="Self.FK_dbo_tbAudLect_dbo_tbGroups_GroupId" FromRole="tbGroups" ToRole="tbAudLect" />
+          <NavigationProperty Name="tbSpeciality" Relationship="Self.FK_dbo_tbGroups_dbo_tbSpeciality_Speciality_Id" FromRole="tbGroups" ToRole="tbSpeciality" />
+          <NavigationProperty Name="tbStudents" Relationship="Self.FK_dbo_tbStudents_dbo_tbGroups_Group_Id" FromRole="tbGroups" ToRole="tbStudents" />
+        </EntityType>
+        <EntityType Name="tbLection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Finish" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Day" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbAudLects" Relationship="Self.FK_dbo_tbAudLect_dbo_tbLections_LectId" FromRole="tbLections" ToRole="tbAudLect" />
+        </EntityType>
+        <EntityType Name="tbMark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentsMark" Type="Int32" Nullable="false" />
+          <Property Name="Student_Id" Type="Int32" />
+          <Property Name="TeachSubj_TeacherId" Type="Int32" />
+          <Property Name="TeachSubj_SubjId" Type="Int32" />
+          <NavigationProperty Name="tbStudent" Relationship="Self.FK_dbo_tbMarks_dbo_tbStudents_Student_Id" FromRole="tbMarks" ToRole="tbStudents" />
+          <NavigationProperty Name="tbTeachSubj" Relationship="Self.FK_dbo_tbMarks_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId" FromRole="tbMarks" ToRole="tbTeachSubj" />
+        </EntityType>
+        <EntityType Name="tbPhone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentsPhone" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Student_Id" Type="Int32" />
+          <NavigationProperty Name="tbStudent" Relationship="Self.FK_dbo_tbPhones_dbo_tbStudents_Student_Id" FromRole="tbPhones" ToRole="tbStudents" />
+        </EntityType>
+        <EntityType Name="tbSpeciality">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbGroups" Relationship="Self.FK_dbo_tbGroups_dbo_tbSpeciality_Speciality_Id" FromRole="tbSpeciality" ToRole="tbGroups" />
+        </EntityType>
+        <EntityType Name="tbStudent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LogbookNumber" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Group_Id" Type="Int32" />
+          <NavigationProperty Name="tbGroup" Relationship="Self.FK_dbo_tbStudents_dbo_tbGroups_Group_Id" FromRole="tbStudents" ToRole="tbGroups" />
+          <NavigationProperty Name="tbMarks" Relationship="Self.FK_dbo_tbMarks_dbo_tbStudents_Student_Id" FromRole="tbStudents" ToRole="tbMarks" />
+          <NavigationProperty Name="tbPhones" Relationship="Self.FK_dbo_tbPhones_dbo_tbStudents_Student_Id" FromRole="tbStudents" ToRole="tbPhones" />
+        </EntityType>
+        <EntityType Name="tbSubject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbTeachSubjs" Relationship="Self.FK_dbo_tbTeachSubj_dbo_tbSubjects_SubjId" FromRole="tbSubjects" ToRole="tbTeachSubj" />
+        </EntityType>
+        <EntityType Name="tbTeacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Department_Id" Type="Int32" />
+          <NavigationProperty Name="tbDepartment" Relationship="Self.FK_dbo_tbTeachers_dbo_tbDepartments_Department_Id" FromRole="tbTeachers" ToRole="tbDepartments" />
+          <NavigationProperty Name="tbTeachSubjs" Relationship="Self.FK_dbo_tbTeachSubj_dbo_tbTeachers_TeacherId" FromRole="tbTeachers" ToRole="tbTeachSubj" />
+        </EntityType>
+        <EntityType Name="tbTeachSubj">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+            <PropertyRef Name="SubjId" />
+          </Key>
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="SubjId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="tbAudLects" Relationship="Self.FK_dbo_tbAudLect_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId" FromRole="tbTeachSubj" ToRole="tbAudLect" />
+          <NavigationProperty Name="tbMarks" Relationship="Self.FK_dbo_tbMarks_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId" FromRole="tbTeachSubj" ToRole="tbMarks" />
+          <NavigationProperty Name="tbSubject" Relationship="Self.FK_dbo_tbTeachSubj_dbo_tbSubjects_SubjId" FromRole="tbTeachSubj" ToRole="tbSubjects" />
+          <NavigationProperty Name="tbTeacher" Relationship="Self.FK_dbo_tbTeachSubj_dbo_tbTeachers_TeacherId" FromRole="tbTeachSubj" ToRole="tbTeachers" />
+        </EntityType>
+        <Association Name="FK_dbo_tbAudLect_dbo_tbAudiences_AudId">
+          <End Role="tbAudiences" Type="Self.tbAudience" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbAudLect" Type="Self.tbAudLect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbAudiences">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbAudLect">
+              <PropertyRef Name="AudId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbAudLect_dbo_tbGroups_GroupId">
+          <End Role="tbGroups" Type="Self.tbGroup" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbAudLect" Type="Self.tbAudLect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbGroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbAudLect">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbAudLect_dbo_tbLections_LectId">
+          <End Role="tbLections" Type="Self.tbLection" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbAudLect" Type="Self.tbAudLect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbLections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbAudLect">
+              <PropertyRef Name="LectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbAudLect_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId">
+          <End Role="tbTeachSubj" Type="Self.tbTeachSubj" Multiplicity="0..1" />
+          <End Role="tbAudLect" Type="Self.tbAudLect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTeachSubj">
+              <PropertyRef Name="TeacherId" />
+              <PropertyRef Name="SubjId" />
+            </Principal>
+            <Dependent Role="tbAudLect">
+              <PropertyRef Name="TeachSubj_TeacherId" />
+              <PropertyRef Name="TeachSubj_SubjId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbTeachers_dbo_tbDepartments_Department_Id">
+          <End Role="tbDepartments" Type="Self.tbDepartment" Multiplicity="0..1" />
+          <End Role="tbTeachers" Type="Self.tbTeacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbDepartments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbTeachers">
+              <PropertyRef Name="Department_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbGroups_dbo_tbSpeciality_Speciality_Id">
+          <End Role="tbSpeciality" Type="Self.tbSpeciality" Multiplicity="0..1" />
+          <End Role="tbGroups" Type="Self.tbGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbSpeciality">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbGroups">
+              <PropertyRef Name="Speciality_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbStudents_dbo_tbGroups_Group_Id">
+          <End Role="tbGroups" Type="Self.tbGroup" Multiplicity="0..1" />
+          <End Role="tbStudents" Type="Self.tbStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbGroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbStudents">
+              <PropertyRef Name="Group_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbMarks_dbo_tbStudents_Student_Id">
+          <End Role="tbStudents" Type="Self.tbStudent" Multiplicity="0..1" />
+          <End Role="tbMarks" Type="Self.tbMark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbStudents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbMarks">
+              <PropertyRef Name="Student_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbMarks_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId">
+          <End Role="tbTeachSubj" Type="Self.tbTeachSubj" Multiplicity="0..1" />
+          <End Role="tbMarks" Type="Self.tbMark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTeachSubj">
+              <PropertyRef Name="TeacherId" />
+              <PropertyRef Name="SubjId" />
+            </Principal>
+            <Dependent Role="tbMarks">
+              <PropertyRef Name="TeachSubj_TeacherId" />
+              <PropertyRef Name="TeachSubj_SubjId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbPhones_dbo_tbStudents_Student_Id">
+          <End Role="tbStudents" Type="Self.tbStudent" Multiplicity="0..1" />
+          <End Role="tbPhones" Type="Self.tbPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbStudents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbPhones">
+              <PropertyRef Name="Student_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbTeachSubj_dbo_tbSubjects_SubjId">
+          <End Role="tbSubjects" Type="Self.tbSubject" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbTeachSubj" Type="Self.tbTeachSubj" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbTeachSubj">
+              <PropertyRef Name="SubjId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbTeachSubj_dbo_tbTeachers_TeacherId">
+          <End Role="tbTeachers" Type="Self.tbTeacher" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbTeachSubj" Type="Self.tbTeachSubj" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTeachers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbTeachSubj">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestDatabaseEntityEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbAudiences" EntityType="Self.tbAudience" />
+          <EntitySet Name="tbAudLects" EntityType="Self.tbAudLect" />
+          <EntitySet Name="tbDepartments" EntityType="Self.tbDepartment" />
+          <EntitySet Name="tbGroups" EntityType="Self.tbGroup" />
+          <EntitySet Name="tbLections" EntityType="Self.tbLection" />
+          <EntitySet Name="tbMarks" EntityType="Self.tbMark" />
+          <EntitySet Name="tbPhones" EntityType="Self.tbPhone" />
+          <EntitySet Name="tbSpecialities" EntityType="Self.tbSpeciality" />
+          <EntitySet Name="tbStudents" EntityType="Self.tbStudent" />
+          <EntitySet Name="tbSubjects" EntityType="Self.tbSubject" />
+          <EntitySet Name="tbTeachers" EntityType="Self.tbTeacher" />
+          <EntitySet Name="tbTeachSubjs" EntityType="Self.tbTeachSubj" />
+          <AssociationSet Name="FK_dbo_tbAudLect_dbo_tbAudiences_AudId" Association="Self.FK_dbo_tbAudLect_dbo_tbAudiences_AudId">
+            <End Role="tbAudiences" EntitySet="tbAudiences" />
+            <End Role="tbAudLect" EntitySet="tbAudLects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbAudLect_dbo_tbGroups_GroupId" Association="Self.FK_dbo_tbAudLect_dbo_tbGroups_GroupId">
+            <End Role="tbGroups" EntitySet="tbGroups" />
+            <End Role="tbAudLect" EntitySet="tbAudLects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbAudLect_dbo_tbLections_LectId" Association="Self.FK_dbo_tbAudLect_dbo_tbLections_LectId">
+            <End Role="tbLections" EntitySet="tbLections" />
+            <End Role="tbAudLect" EntitySet="tbAudLects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbAudLect_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId" Association="Self.FK_dbo_tbAudLect_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId">
+            <End Role="tbTeachSubj" EntitySet="tbTeachSubjs" />
+            <End Role="tbAudLect" EntitySet="tbAudLects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbTeachers_dbo_tbDepartments_Department_Id" Association="Self.FK_dbo_tbTeachers_dbo_tbDepartments_Department_Id">
+            <End Role="tbDepartments" EntitySet="tbDepartments" />
+            <End Role="tbTeachers" EntitySet="tbTeachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbGroups_dbo_tbSpeciality_Speciality_Id" Association="Self.FK_dbo_tbGroups_dbo_tbSpeciality_Speciality_Id">
+            <End Role="tbSpeciality" EntitySet="tbSpecialities" />
+            <End Role="tbGroups" EntitySet="tbGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbStudents_dbo_tbGroups_Group_Id" Association="Self.FK_dbo_tbStudents_dbo_tbGroups_Group_Id">
+            <End Role="tbGroups" EntitySet="tbGroups" />
+            <End Role="tbStudents" EntitySet="tbStudents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbMarks_dbo_tbStudents_Student_Id" Association="Self.FK_dbo_tbMarks_dbo_tbStudents_Student_Id">
+            <End Role="tbStudents" EntitySet="tbStudents" />
+            <End Role="tbMarks" EntitySet="tbMarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbMarks_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId" Association="Self.FK_dbo_tbMarks_dbo_tbTeachSubj_TeachSubj_TeacherId_TeachSubj_SubjId">
+            <End Role="tbTeachSubj" EntitySet="tbTeachSubjs" />
+            <End Role="tbMarks" EntitySet="tbMarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbPhones_dbo_tbStudents_Student_Id" Association="Self.FK_dbo_tbPhones_dbo_tbStudents_Student_Id">
+            <End Role="tbStudents" EntitySet="tbStudents" />
+            <End Role="tbPhones" EntitySet="tbPhones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbTeachSubj_dbo_tbSubjects_SubjId" Association="Self.FK_dbo_tbTeachSubj_dbo_tbSubjects_SubjId">
+            <End Role="tbSubjects" EntitySet="tbSubjects" />
+            <End Role="tbTeachSubj" EntitySet="tbTeachSubjs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbTeachSubj_dbo_tbTeachers_TeacherId" Association="Self.FK_dbo_tbTeachSubj_dbo_tbTeachers_TeacherId">
+            <End Role="tbTeachers" EntitySet="tbTeachers" />
+            <End Role="tbTeachSubj" EntitySet="tbTeachSubjs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestDatabaseEntityModelStoreContainer" CdmEntityContainer="TestDatabaseEntityEntities">
+          <EntitySetMapping Name="tbAudiences">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbAudience">
+              <MappingFragment StoreEntitySet="tbAudiences">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbAudLects">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbAudLect">
+              <MappingFragment StoreEntitySet="tbAudLect">
+                <ScalarProperty Name="AudId" ColumnName="AudId" />
+                <ScalarProperty Name="LectId" ColumnName="LectId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TeachSubj_TeacherId" ColumnName="TeachSubj_TeacherId" />
+                <ScalarProperty Name="TeachSubj_SubjId" ColumnName="TeachSubj_SubjId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbDepartments">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbDepartment">
+              <MappingFragment StoreEntitySet="tbDepartments">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbGroups">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbGroup">
+              <MappingFragment StoreEntitySet="tbGroups">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Speciality_Id" ColumnName="Speciality_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbLections">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbLection">
+              <MappingFragment StoreEntitySet="tbLections">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="Finish" ColumnName="Finish" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbMarks">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbMark">
+              <MappingFragment StoreEntitySet="tbMarks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StudentsMark" ColumnName="StudentsMark" />
+                <ScalarProperty Name="Student_Id" ColumnName="Student_Id" />
+                <ScalarProperty Name="TeachSubj_TeacherId" ColumnName="TeachSubj_TeacherId" />
+                <ScalarProperty Name="TeachSubj_SubjId" ColumnName="TeachSubj_SubjId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbPhones">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbPhone">
+              <MappingFragment StoreEntitySet="tbPhones">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StudentsPhone" ColumnName="StudentsPhone" />
+                <ScalarProperty Name="Student_Id" ColumnName="Student_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbSpecialities">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbSpeciality">
+              <MappingFragment StoreEntitySet="tbSpeciality">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbStudents">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbStudent">
+              <MappingFragment StoreEntitySet="tbStudents">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="LogbookNumber" ColumnName="LogbookNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Group_Id" ColumnName="Group_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbSubjects">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbSubject">
+              <MappingFragment StoreEntitySet="tbSubjects">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTeachers">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbTeacher">
+              <MappingFragment StoreEntitySet="tbTeachers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Department_Id" ColumnName="Department_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTeachSubjs">
+            <EntityTypeMapping TypeName="TestDatabaseEntityModel.tbTeachSubj">
+              <MappingFragment StoreEntitySet="tbTeachSubj">
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="SubjId" ColumnName="SubjId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

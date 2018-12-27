@@ -8,7 +8,7 @@ using System.Web.Http;
 namespace UniService.Controllers
 {
     public class ValuesController : ApiController
-    {
+    {/*
         // GET api/values
         public IEnumerable<string> Get()
         {
@@ -34,6 +34,6 @@ namespace UniService.Controllers
         // DELETE api/values/5
         public void Delete(int id)
         {
-        }
+        }*/
     }
 }
